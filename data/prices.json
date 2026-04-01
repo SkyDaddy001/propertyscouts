@@ -1,0 +1,170 @@
+{
+  "prices": [
+    {
+      "property": "skylivng",
+      "propertyName": "SkyLiving Tambaram",
+      "unitType": "2bhk",
+      "minSize": 993,
+      "maxSize": 1125,
+      "minPrice": {
+        "inr": 6200000,
+        "usd": 74524,
+        "gbp": 59316,
+        "aed": 273518
+      },
+      "maxPrice": {
+        "inr": 6700000,
+        "usd": 80486,
+        "gbp": 64146,
+        "aed": 295182
+      },
+      "rentalIncome": {
+        "min": 50000,
+        "max": 60000,
+        "description": "₹50K-60K monthly"
+      },
+      "yield": "9-12%",
+      "lastUpdated": "2026-04-01T00:00:00Z"
+    },
+    {
+      "property": "skylivng",
+      "propertyName": "SkyLiving Tambaram",
+      "unitType": "3bhk",
+      "minSize": 1276,
+      "maxSize": 1426,
+      "minPrice": {
+        "inr": 8500000,
+        "usd": 102191,
+        "gbp": 81456,
+        "aed": 377437
+      },
+      "maxPrice": {
+        "inr": 10000000,
+        "usd": 120224,
+        "gbp": 95890,
+        "aed": 443590
+      },
+      "rentalIncome": {
+        "min": 65000,
+        "max": 80000,
+        "description": "₹65K-80K monthly"
+      },
+      "yield": "9-12%",
+      "lastUpdated": "2026-04-01T00:00:00Z"
+    },
+    {
+      "property": "leagueone",
+      "propertyName": "League One Kattupakkam",
+      "unitType": "2bhk",
+      "minSize": 990,
+      "maxSize": 1120,
+      "minPrice": {
+        "inr": 5900000,
+        "usd": 70826,
+        "gbp": 56457,
+        "aed": 257976
+      },
+      "maxPrice": {
+        "inr": 6400000,
+        "usd": 76967,
+        "gbp": 61387,
+        "aed": 276352
+      },
+      "rentalIncome": {
+        "min": 48000,
+        "max": 58000,
+        "description": "₹48K-58K monthly"
+      },
+      "yield": "9-12%",
+      "lastUpdated": "2026-04-01T00:00:00Z"
+    },
+    {
+      "property": "leagueone",
+      "propertyName": "League One Kattupakkam",
+      "unitType": "3bhk",
+      "minSize": 1300,
+      "maxSize": 1410,
+      "minPrice": {
+        "inr": 8000000,
+        "usd": 96269,
+        "gbp": 76751,
+        "aed": 346296
+      },
+      "maxPrice": {
+        "inr": 9500000,
+        "usd": 114321,
+        "gbp": 91092,
+        "aed": 411625
+      },
+      "rentalIncome": {
+        "min": 62000,
+        "max": 75000,
+        "description": "₹62K-75K monthly"
+      },
+      "yield": "9-12%",
+      "lastUpdated": "2026-04-01T00:00:00Z"
+    },
+    {
+      "property": "luxeone",
+      "propertyName": "Luxe One Kattupakkam",
+      "unitType": "2bhk",
+      "minSize": 1000,
+      "maxSize": 1150,
+      "minPrice": {
+        "inr": 6500000,
+        "usd": 78088,
+        "gbp": 62216,
+        "aed": 282034
+      },
+      "maxPrice": {
+        "inr": 7000000,
+        "usd": 84229,
+        "gbp": 67146,
+        "aed": 303410
+      },
+      "rentalIncome": {
+        "min": 52000,
+        "max": 62000,
+        "description": "₹52K-62K monthly"
+      },
+      "yield": "9-12%",
+      "lastUpdated": "2026-04-01T00:00:00Z"
+    },
+    {
+      "property": "luxeone",
+      "propertyName": "Luxe One Kattupakkam",
+      "unitType": "3bhk",
+      "minSize": 1350,
+      "maxSize": 1450,
+      "minPrice": {
+        "inr": 9000000,
+        "usd": 108192,
+        "gbp": 86221,
+        "aed": 390128
+      },
+      "maxPrice": {
+        "inr": 11000000,
+        "usd": 132265,
+        "gbp": 105472,
+        "aed": 476828
+      },
+      "rentalIncome": {
+        "min": 68000,
+        "max": 85000,
+        "description": "₹68K-85K monthly"
+      },
+      "yield": "9-12%",
+      "lastUpdated": "2026-04-01T00:00:00Z"
+    }
+  ],
+  "forexRates": {
+    "usd": 83.45,
+    "gbp": 105.23,
+    "aed": 30.56,
+    "lastFetchedAt": "2026-04-01T00:00:00Z"
+  },
+  "metadata": {
+    "generatedAt": "2026-04-01T00:00:00Z",
+    "version": "1.0"
+  }
+}

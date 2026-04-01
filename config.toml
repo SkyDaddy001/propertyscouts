@@ -1,0 +1,24 @@
+baseURL = "https://homeraltors.com/"
+languageCode = "en-us"
+title = "Home Realtors - Premium Real Estate in Chennai"
+theme = "custom"
+defaultContentLanguage = "en"
+enableRobotsTXT = true
+canonifyURLs = true
+pygmentsUseClasses = true
+
+[params]
+  description = "Premium residential properties in Chennai - Investors, Families, Luxury Buyers, NRI Investors"
+  author = "Home Realtors"
+  logo = "/images/logo.png"
+  googleAnalyticsID = ""
+  apiKeys = { gemini = "${GEMINI_API_KEY}" }
+
+[outputs]
+  home = ["HTML", "JSON"]
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[build]
+  writeStats = true
