@@ -1,0 +1,76 @@
+<section id="schedule" class="nurture-form-section">
+    <div class="form-container">
+        <h2>Schedule Your Site Visit</h2>
+        <p class="form-subtitle">Join thousands of satisfied buyers who found their dream home with us</p>
+
+        <form class="nurture-form" data-property="{{ .Params.propertyId }}" data-persona="{{ .Params.persona }}">
+            <div class="form-group">
+                <label for="name">Your Name *</label>
+                <input type="text" id="name" name="name" required placeholder="John Doe">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" name="phone" required placeholder="+91-XXXXXXXXXX">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="john@example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="property">Interested Property *</label>
+                <select id="property" name="property" required>
+                    <option value="">-- Select Property --</option>
+                    <option value="skylivng">SkyLiving Tambaram</option>
+                    <option value="leagueone">League One Kattupakkam</option>
+                    <option value="luxeone">Luxe One Kattupakkam</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="unit-type">Unit Type *</label>
+                <select id="unit-type" name="unitType" required>
+                    <option value="">-- Select --</option>
+                    <option value="2bhk">2 BHK</option>
+                    <option value="3bhk">3 BHK</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="buyer-type">I am a *</label>
+                <select id="buyer-type" name="buyerType" required>
+                    <option value="">-- Select --</option>
+                    <option value="investor">Investor</option>
+                    <option value="family">Family Buyer</option>
+                    <option value="luxury">Luxury Buyer</option>
+                    <option value="nri">NRI Investor</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="preferred-date">Preferred Visit Date</label>
+                <input type="date" id="preferred-date" name="preferredDate">
+            </div>
+
+            <div class="form-group checkbox">
+                <input type="checkbox" id="whatsapp" name="whatsapp" checked>
+                <label for="whatsapp">Contact me on WhatsApp</label>
+            </div>
+
+            <div class="form-group checkbox">
+                <input type="checkbox" id="newsletter" name="newsletter">
+                <label for="newsletter">Subscribe to investment updates</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-large">Schedule Now</button>
+            <p class="form-privacy">We respect your privacy. No spam, no sharing.</p>
+        </form>
+
+        <div class="form-alternative">
+            <p><strong>Prefer to call?</strong> <a href="tel:+91XXXXXXXXXX">📞 +91-XXXXXXXXXX</a></p>
+            <p><strong>Chat with AI?</strong> <button id="chat-trigger-form" class="link-btn">💬 Start Conversation</button></p>
+        </div>
+    </div>
+</section>

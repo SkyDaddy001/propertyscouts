@@ -1,0 +1,115 @@
+{{ define "main" }}
+<!DOCTYPE html>
+<html lang="en" data-gemini-key="{{ .Site.Params.apiKeys.gemini }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Site.Title }} - Premium Real Estate in Chennai</title>
+    <meta name="description" content="{{ .Site.Params.description }}">
+    <meta property="og:title" content="{{ .Site.Title }}">
+    <meta property="og:description" content="{{ .Site.Params.description }}">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="{{ .Permalink }}">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/chat-widget.css">
+</head>
+<body>
+    {{ partial "header.html" . }}
+
+    <main class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Premium Residential Properties in Chennai</h1>
+                <p class="subtitle">Invest Smart. Live Better. Find Your Perfect Home.</p>
+                <p class="tagline">Exclusive properties for investors, families, and luxury buyers</p>
+                <div class="cta-buttons">
+                    <a href="#properties" class="btn btn-primary">Explore Properties</a>
+                    <button class="btn btn-secondary" id="chat-trigger">Chat with AI Assistant</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="properties" class="properties-grid">
+            <h2>Our Featured Properties</h2>
+            <div class="property-cards">
+                {{ range $.Site.Data.properties.properties }}
+                <div class="property-card">
+                    <div class="property-header">
+                        <h3>{{ .name }}</h3>
+                        <p class="location">📍 {{ .location }}</p>
+                    </div>
+                    <div class="property-details">
+                        <ul>
+                            <li><strong>{{ .totalUnits }}</strong> Units</li>
+                            <li><strong>{{ .blocks }}</strong> Blocks</li>
+                            <li>RERA: {{ .reraNo }}</li>
+                        </ul>
+                    </div>
+                    <div class="property-cta">
+                        <a href="/{{ .slug }}/" class="btn btn-small">View Details</a>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </section>
+
+        <section class="buyer-personas">
+            <h2>Find Properties For Your Needs</h2>
+            <div class="personas-grid">
+                <div class="persona">
+                    <h3>💼 Investors</h3>
+                    <p>8-12% rental yield, tax benefits, appreciation</p>
+                    <a href="/skylivng/investors/" class="persona-link">For Investors →</a>
+                </div>
+                <div class="persona">
+                    <h3>👨‍👩‍👧‍👦 Families</h3>
+                    <p>Top schools, healthcare, safe communities</p>
+                    <a href="/skylivng/families/" class="persona-link">For Families →</a>
+                </div>
+                <div class="persona">
+                    <h3>👑 Luxury Buyers</h3>
+                    <p>Exclusivity, privacy, ultra-premium finishes</p>
+                    <a href="/skylivng/luxury/" class="persona-link">Luxury Living →</a>
+                </div>
+                <div class="persona">
+                    <h3>🌍 NRI Investors</h3>
+                    <p>FPI-friendly, multi-currency, remote process</p>
+                    <a href="/skylivng/nri/" class="persona-link">For NRI Investors →</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="why-us">
+            <h2>Why Choose Home Realtors?</h2>
+            <div class="features">
+                <div class="feature">
+                    <span class="icon">✅</span>
+                    <h4>Verified Properties</h4>
+                    <p>All RERA registered with transparent pricing</p>
+                </div>
+                <div class="feature">
+                    <span class="icon">💬</span>
+                    <h4>AI Assistant</h4>
+                    <p>Get personalized recommendations 24/7</p>
+                </div>
+                <div class="feature">
+                    <span class="icon">📊</span>
+                    <h4>Investment Analysis</h4>
+                    <p>Detailed ROI, yield, and tax benefit calculations</p>
+                </div>
+                <div class="feature">
+                    <span class="icon">🚀</span>
+                    <h4>Quick Process</h4>
+                    <p>100% remote friendly with digital documentation</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    {{ partial "footer.html" . }}
+
+    <script src="/js/gemini-chat.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
+{{ end }}
