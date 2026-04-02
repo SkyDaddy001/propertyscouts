@@ -35,12 +35,14 @@ jobs:
           HUGO_PARAMS_GOOGLEANALYTICSID: ${{ secrets.GA_TRACKING_ID }}
         run: hugo --minify
 
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          folder: public
-          branch: gh-pages
-          token: ${{ secrets.GITHUB_TOKEN }}
+          path: ./public
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v3
 
       - name: Notify completion
         run: |
