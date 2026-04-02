@@ -36,14 +36,23 @@ async function handleFormSubmit(e) {
 
   var webhookUrl = window.SITE_CONFIG && window.SITE_CONFIG.formWebhookUrl;
 
+  console.log('Form data:', data);
+  console.log('Webhook URL:', webhookUrl);
+  console.log('SITE_CONFIG:', window.SITE_CONFIG);
+
   try {
     if (webhookUrl) {
+      console.log('Posting to webhook...');
       var response = await fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        mode: 'cors'
       });
+      console.log('Webhook response:', response.status, response.statusText);
       if (!response.ok) throw new Error('Webhook ' + response.status);
+    } else {
+      console.log('No webhook URL configured');
     }
 
     showSuccessMessage(form, data);
