@@ -1,0 +1,208 @@
+{
+  "name": "Property Scouts - Lead Capture & Price Sync",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "leads",
+        "responseMode": "onReceived",
+        "authentication": "headerAuth",
+        "headerAuth": {
+          "secretName": "n8n_webhook_secret"
+        }
+      },
+      "id": "webhook_receive_leads",
+      "name": "Webhook: Receive Leads",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 100]
+    },
+    {
+      "parameters": {
+        "conditions": "object",
+        "combineOperation": "any",
+        "options": {}
+      },
+      "id": "route_lead_type",
+      "name": "Route by Lead Type",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [450, 100],
+      "routing": [
+        {
+          "conditions": {
+            "conditions": [
+              {
+                "key": "type",
+                "operation": "equals",
+                "value": "form-lead"
+              }
+            ]
+          },
+          "outputIndex": 0
+        },
+        {
+          "conditions": {
+            "conditions": [
+              {
+                "key": "type",
+                "operation": "equals",
+                "value": "chat-lead"
+              }
+            ]
+          },
+          "outputIndex": 1
+        }
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "sheet_id_here",
+          "resource": "spreadsheetId"
+        },
+        "columns": {
+          "mappingMode": "defineByMapping",
+          "value": {
+            "Timestamp": "{{ $node.webhook_receive_leads.json.timestamp }}",
+            "Name": "{{ $node.webhook_receive_leads.json.name }}",
+            "Phone": "{{ $node.webhook_receive_leads.json.phone }}",
+            "Email": "{{ $node.webhook_receive_leads.json.email }}",
+            "Property": "{{ $node.webhook_receive_leads.json.property }}",
+            "Persona": "{{ $node.webhook_receive_leads.json.persona }}",
+            "Unit Type": "{{ $node.webhook_receive_leads.json.units }}",
+            "WhatsApp Opted": "{{ $node.webhook_receive_leads.json.whatsapp }}",
+            "Newsletter": "{{ $node.webhook_receive_leads.json.newsletter }}",
+            "Source": "{{ $node.webhook_receive_leads.json.source }}",
+            "Lead Type": "Form",
+            "Status": "New"
+          }
+        }
+      },
+      "id": "save_form_lead_sheets",
+      "name": "Save Form Lead to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [650, 50]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "sheet_id_here",
+          "resource": "spreadsheetId"
+        },
+        "columns": {
+          "mappingMode": "defineByMapping",
+          "value": {
+            "Timestamp": "{{ $node.webhook_receive_leads.json.timestamp }}",
+            "Name": "{{ $node.webhook_receive_leads.json.name }}",
+            "Phone": "{{ $node.webhook_receive_leads.json.phone }}",
+            "Email": "",
+            "Property": "",
+            "Persona": "",
+            "Unit Type": "",
+            "WhatsApp Opted": "yes",
+            "Newsletter": "no",
+            "Source": "{{ $node.webhook_receive_leads.json.source }}",
+            "Lead Type": "Chat",
+            "Status": "New"
+          }
+        }
+      },
+      "id": "save_chat_lead_sheets",
+      "name": "Save Chat Lead to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [650, 180]
+    },
+    {
+      "parameters": {
+        "phoneNumber": "{{ $node.webhook_receive_leads.json.phone }}",
+        "message": "Hi {{ $node.webhook_receive_leads.json.name | split(' ')[0] }}! Thanks for your interest in {{ $node.webhook_receive_leads.json.property || 'our properties' }}. Our team will call you within 24 hours.",
+        "credentialId": "whatsapp_business"
+      },
+      "id": "send_whatsapp_confirmation",
+      "name": "Send WhatsApp Confirmation",
+      "type": "n8n-nodes-base.whatsapp",
+      "typeVersion": 1,
+      "position": [850, 100]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "url": "https://api.github.com/repos/SkyDaddy001/propertyscouts/dispatches",
+        "authentication": "headerAuth",
+        "headerAuth": {
+          "secretName": "github_pat"
+        },
+        "specifyHeaders": "json",
+        "headerParameters": {
+          "Accept": "application/vnd.github+json"
+        },
+        "body": "{\n  \"event_type\": \"lead-captured\",\n  \"client_payload\": {\n    \"name\": \"{{ $node.webhook_receive_leads.json.name }}\",\n    \"phone\": \"{{ $node.webhook_receive_leads.json.phone }}\",\n    \"timestamp\": \"{{ $node.webhook_receive_leads.json.timestamp }}\"\n  }\n}"
+      },
+      "id": "notify_github",
+      "name": "Notify GitHub (Optional)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [850, 200]
+    }
+  ],
+  "connections": {
+    "webhook_receive_leads": {
+      "main": [
+        [
+          {
+            "node": "route_lead_type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "route_lead_type": {
+      "main": [
+        [
+          {
+            "node": "save_form_lead_sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "send_whatsapp_confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "save_chat_lead_sheets",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "send_whatsapp_confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "send_whatsapp_confirmation": {
+      "main": [
+        [
+          {
+            "node": "notify_github",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {}
+}
