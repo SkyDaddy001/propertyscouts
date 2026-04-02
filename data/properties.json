@@ -1,0 +1,103 @@
+{
+  "properties": [
+    {
+      "id": "skylivng",
+      "slug": "skylivng",
+      "name": "SkyLiving Tambaram",
+      "location": "Tambaram, Chennai",
+      "address": "Dharkast Road, Kannadapalayam, Kishkintha Main Road, Tambaram, Chennai – 600045",
+      "blocks": 2,
+      "totalUnits": 175,
+      "configurations": ["2bhk", "3bhk"],
+      "reraNo": "TN/35/Building/0034/2025",
+      "reraDate": "04-02-2025",
+      "builder": "LML Homes",
+      "description": "5-Star luxury residential apartments with ultra-premium amenities",
+      "highlights": [
+        "High-rise 13 floors (Basement + Stilt + 13 floors)",
+        "Low-density: 2 units per floor side",
+        "Spa, wine lounge, yoga studio",
+        "Smart home automation",
+        "Railway station 5 mins",
+        "Metro phase 2 connectivity (2027)"
+      ],
+      "amenities": {
+        "wellness": ["AC Gym", "Spa", "Steam Room", "Yoga Studio"],
+        "recreation": ["Swimming Pool", "Table Tennis", "Billiards", "Activity Center"],
+        "infrastructure": ["24/7 Security", "CCTV", "WiFi", "EV Charging", "Broadband"]
+      },
+      "connectivity": {
+        "railway": "5 mins",
+        "airport": "15 mins",
+        "itPark": "20-25 mins",
+        "metro2027": "Direct connectivity planned"
+      }
+    },
+    {
+      "id": "leagueone",
+      "slug": "leagueone",
+      "name": "League One Kattupakkam",
+      "location": "Kattupakkam, Chennai",
+      "address": "Noombal Salai, Goparasanallur Main Road, Goparasanallur, Chennai – 600056",
+      "blocks": 4,
+      "totalUnits": 125,
+      "configurations": ["2bhk", "3bhk"],
+      "reraNo": "TN/2/Building/0405/2024",
+      "reraDate": "25-06-2024",
+      "builder": "LML Homes",
+      "description": "Premium luxury apartments with low-density and exclusive features",
+      "highlights": [
+        "4 blocks, 125 units total",
+        "Low-density: 2 units per floor facing different directions",
+        "Grand entrance arch",
+        "9000+ sq.ft. clubhouse",
+        "No main doors facing each other",
+        "Vaastu-compliant design"
+      ],
+      "amenities": {
+        "wellness": ["AC Gym", "Yoga Hall", "Steam Rooms", "Trainer Room"],
+        "recreation": ["Table Tennis", "Foosball", "Air Hockey", "Billiards", "Dart Board"],
+        "infrastructure": ["MyGate Access", "24/7 CCTV", "WiFi", "Water Treatment Plant"]
+      },
+      "connectivity": {
+        "highroad": "90 meters from Poonamallee High Road",
+        "railway": "9 mins to Porur",
+        "airport": "~15 km",
+        "metroConnectivity": "Upcoming Metro Phase 2"
+      }
+    },
+    {
+      "id": "luxeone",
+      "slug": "luxeone",
+      "name": "Luxe One Kattupakkam",
+      "location": "Kattupakkam, Chennai",
+      "address": "Kattupakkam, Chennai",
+      "blocks": 2,
+      "totalUnits": 150,
+      "configurations": ["2bhk", "3bhk"],
+      "reraNo": "TN/X/Building/XXXX/2024",
+      "reraDate": "2024",
+      "builder": "LML Homes",
+      "description": "Ultra-premium low-density residential enclave for exclusive living",
+      "highlights": [
+        "4.45 acres spread",
+        "Five-storey blocks",
+        "Villament-style homes with minimal wall sharing",
+        "100% Vaastu-compliant apartments",
+        "Limited edition residential enclave",
+        "Regal, exclusive address"
+      ],
+      "amenities": {
+        "wellness": ["Spa", "Yoga Studio", "Steam Rooms"],
+        "recreation": ["Wine Lounge", "Activity Centers", "Landscaped Parks"],
+        "infrastructure": ["24/7 Security", "CCTV", "Smart Home", "WiFi"]
+      },
+      "connectivity": {
+        "location": "Close to Poonamallee High Road",
+        "schools": "47 schools within 5 km",
+        "hospitals": "15+ hospitals within 10 mins",
+        "retail": "D-Mart, Reliance Mall nearby"
+      }
+    }
+  ]
+}

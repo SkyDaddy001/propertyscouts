@@ -1,0 +1,32 @@
+# Hugo
+/public/
+/resources/
+/dist/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Node & npm
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Logs
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Generated
+.hugo_build.lock

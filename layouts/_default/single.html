@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" data-gemini-key="{{ .Site.Params.apiKeys.gemini }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ .Title }} - Home Realtors</title>
+    <meta name="description" content="{{ .Params.description | default .Summary }}">
+    <meta property="og:title" content="{{ .Title }}">
+    <meta property="og:description" content="{{ .Params.description | default .Summary }}">
+    <meta property="og:type" content="website">
+    {{ if .Params.canonical }}<link rel="canonical" href="{{ .Params.canonical }}">{{ end }}
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/chat-widget.css">
+</head>
+<body>
+    {{ partial "header.html" . }}
+
+    <main class="container">
+        <article class="landing-page">
+            <header class="page-header">
+                <h1>{{ .Title }}</h1>
+                {{ if .Params.subtitle }}<p class="subtitle">{{ .Params.subtitle }}</p>{{ end }}
+            </header>
+
+            <div class="page-content">
+                {{ .Content }}
+            </div>
+
+            {{ if .Params.showPrices }}
+                {{ partial "price-section.html" . }}
+            {{ end }}
+
+            {{ if .Params.showForm }}
+                {{ partial "nurture-form.html" . }}
+            {{ end }}
+
+            <section class="next-steps">
+                <h3>Ready to Take the Next Step?</h3>
+                <div class="action-buttons">
+                    <a href="tel:+91XXXXXXXXXX" class="btn btn-primary">Call Us</a>
+                    <button class="btn btn-secondary" id="chat-trigger-page">Chat with AI</button>
+                    <a href="#schedule" class="btn btn-outline">Schedule Visit</a>
+                </div>
+            </section>
+        </article>
+    </main>
+
+    {{ partial "footer.html" . }}
+
+    <script src="/js/gemini-chat.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>

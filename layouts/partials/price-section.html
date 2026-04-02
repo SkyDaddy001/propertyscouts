@@ -1,0 +1,62 @@
+<section class="pricing-section">
+    <h2>Pricing & Specifications</h2>
+    <p class="pricing-intro">💡 <strong>Limited time pricing</strong> - Prices updated daily. Multi-currency available for NRI buyers.</p>
+
+    <div class="price-grid">
+        {{ $propertyID := .Params.propertyId }}
+        {{ $units := .Params.units }}
+
+        {{ range $units }}
+            {{ $unitType := . }}
+            {{ $prices := where $.Site.Data.prices.prices "property" $propertyID }}
+            {{ $priceData := index (where $prices "unitType" $unitType) 0 }}
+
+            {{ if $priceData }}
+            <div class="price-card">
+                <div class="price-header">
+                    <h3>{{ upper $unitType }}</h3>
+                    <p class="unit-size">{{ $priceData.minSize }} - {{ $priceData.maxSize }} sqft</p>
+                </div>
+
+                <div class="price-display">
+                    <div class="inr-price">
+                        <span class="label">Starting from</span>
+                        <p class="amount">₹{{ div $priceData.minPrice.inr 1000000 }}L - ₹{{ div $priceData.maxPrice.inr 1000000 }}L</p>
+                    </div>
+                </div>
+
+                {{ if eq $unitType "2bhk" }}
+                <div class="rental-info">
+                    <span class="label">Monthly Rental:</span>
+                    <p>₹{{ $priceData.rentalIncome.min }}K - ₹{{ $priceData.rentalIncome.max }}K</p>
+                </div>
+                <div class="yield-info">
+                    <span class="label">Expected Yield:</span>
+                    <p class="yield">{{ $priceData.yield }}</p>
+                </div>
+                {{ end }}
+
+                <div class="multi-currency">
+                    <details>
+                        <summary>View Multi-Currency Pricing →</summary>
+                        <div class="currency-details">
+                            <p>💵 <strong>USD:</strong> ${{ $priceData.minPrice.usd }} - ${{ $priceData.maxPrice.usd }}</p>
+                            <p>💷 <strong>GBP:</strong> £{{ $priceData.minPrice.gbp }} - £{{ $priceData.maxPrice.gbp }}</p>
+                            <p>💰 <strong>AED:</strong> د.إ{{ $priceData.minPrice.aed }} - د.إ{{ $priceData.maxPrice.aed }}</p>
+                            <p class="forex-note">🔄 Live forex rates • Last updated: {{ $priceData.lastUpdated | dateFormat "Jan 02, 2006" }}</p>
+                        </div>
+                    </details>
+                </div>
+
+                <a href="#schedule" class="btn btn-small">Get Quote</a>
+            </div>
+            {{ end }}
+        {{ end }}
+    </div>
+
+    <div class="price-note">
+        <p>✅ <strong>Transparent Pricing:</strong> No hidden costs. What you see is what you pay.</p>
+        <p>✅ <strong>Flexible Payment Plans:</strong> 10% down, rest over 18 months before possession</p>
+        <p>✅ <strong>Bank-Approved:</strong> Easy home loans with 8% interest rates</p>
+    </div>
+</section>
