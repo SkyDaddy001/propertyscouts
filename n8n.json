@@ -1,0 +1,258 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Switch by Lead Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch by Lead Type": {
+      "main": [
+        [
+          {
+            "node": "Append Form Lead to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Append Chat Lead to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append Form Lead to Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append Chat Lead to Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send WhatsApp Confirmation": {
+      "main": [
+        [
+          {
+            "node": "Response Success",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2026-04-02T00:00:00.000Z",
+  "id": "1",
+  "name": "Property Scouts - Lead Capture",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "leads",
+        "httpMethod": "POST",
+        "responseMode": "onReceived",
+        "authentication": "headerAuth",
+        "headerAuth": {
+          "secretName": "n8n_webhook_secret"
+        },
+        "options": {}
+      },
+      "id": "Webhook",
+      "icon": "fa:code",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": "object",
+        "combineOperation": "any",
+        "conditions": [
+          {
+            "key": "type",
+            "operation": "equals",
+            "value": "form-lead",
+            "type": "string"
+          }
+        ]
+      },
+      "id": "Switch by Lead Type",
+      "icon": "fa:code-branch",
+      "name": "Switch by Lead Type",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        500,
+        300
+      ],
+      "routing": [
+        {
+          "conditions": {
+            "conditions": [
+              {
+                "key": "type",
+                "operation": "equals",
+                "value": "form-lead"
+              }
+            ]
+          },
+          "outputIndex": 0
+        },
+        {
+          "conditions": {
+            "conditions": [
+              {
+                "key": "type",
+                "operation": "equals",
+                "value": "chat-lead"
+              }
+            ]
+          },
+          "outputIndex": 1
+        }
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "__rl": true,
+          "resource": "spreadsheetId"
+        },
+        "columns": {
+          "mappingMode": "defineByMapping",
+          "value": {
+            "Timestamp": "=ARRAYFORMULA(IF(ROW(A:A)=1,\"Timestamp\",{{$node[\"Webhook\"].json[\"timestamp\"]}}))",
+            "Name": "={{$node[\"Webhook\"].json[\"name\"]}}",
+            "Phone": "={{$node[\"Webhook\"].json[\"phone\"]}}",
+            "Email": "={{$node[\"Webhook\"].json[\"email\"]}}",
+            "Property": "={{$node[\"Webhook\"].json[\"property\"]}}",
+            "Persona": "={{$node[\"Webhook\"].json[\"persona\"]}}",
+            "Unit Type": "={{$node[\"Webhook\"].json[\"units\"]}}",
+            "WhatsApp": "={{$node[\"Webhook\"].json[\"whatsapp\"]}}",
+            "Newsletter": "={{$node[\"Webhook\"].json[\"newsletter\"]}}",
+            "Source": "={{$node[\"Webhook\"].json[\"source\"]}}",
+            "Lead Type": "=Form",
+            "Status": "=New"
+          }
+        }
+      },
+      "id": "Append Form Lead to Google Sheets",
+      "icon": "fa:table",
+      "name": "Append Form Lead to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [
+        700,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "__rl": true,
+          "resource": "spreadsheetId"
+        },
+        "columns": {
+          "mappingMode": "defineByMapping",
+          "value": {
+            "Timestamp": "={{$node[\"Webhook\"].json[\"timestamp\"]}}",
+            "Name": "={{$node[\"Webhook\"].json[\"name\"]}}",
+            "Phone": "={{$node[\"Webhook\"].json[\"phone\"]}}",
+            "Email": "=",
+            "Property": "=",
+            "Persona": "=",
+            "Unit Type": "=",
+            "WhatsApp": "=Yes",
+            "Newsletter": "=No",
+            "Source": "={{$node[\"Webhook\"].json[\"source\"]}}",
+            "Lead Type": "=Chat",
+            "Status": "=New"
+          }
+        }
+      },
+      "id": "Append Chat Lead to Google Sheets",
+      "icon": "fa:table",
+      "name": "Append Chat Lead to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [
+        700,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "chatId": "={{$node[\"Webhook\"].json[\"phone\"]}}",
+        "text": "Hi {{$node[\"Webhook\"].json[\"name\"].split(' ')[0]}}! 👋\n\nThanks for your interest in {{$node[\"Webhook\"].json[\"property\"] || 'our properties'}}!\n\nOur team will call you within 24 hours.\n\n📱 Phone: +91-8668126015\n🌐 Visit: propertyscouts.in\n\nBest regards,\nProperty Scouts Team"
+      },
+      "id": "Send WhatsApp Confirmation",
+      "icon": "fa:comments",
+      "name": "Send WhatsApp Confirmation",
+      "type": "n8n-nodes-base.whatsapp",
+      "typeVersion": 1,
+      "position": [
+        900,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "responseCode": 200,
+        "responseBody": "{\"status\": \"Lead captured successfully\", \"name\": \"{{$node[\"Webhook\"].json[\"name\"]}}\", \"timestamp\": \"{{$now.toISOString()}}\"}"
+      },
+      "id": "Response Success",
+      "icon": "fa:reply",
+      "name": "Response Success",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        300
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    "property-scouts",
+    "leads",
+    "crm"
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2026-04-02T00:00:00.000Z",
+  "versionId": "1"
+}
