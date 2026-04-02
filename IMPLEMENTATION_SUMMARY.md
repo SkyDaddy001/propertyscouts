@@ -13,7 +13,7 @@
 #### ✅ Hugo Project Setup
 - Directory structure created with proper folders
 - `config.toml` configured with:
-  - Base URL: `https://homeraltors.com/`
+  - Base URL: `https://propertyscouts.in/`
   - Language: English (en-us)
   - Output formats: HTML + JSON
   - Unsafe markup enabled for form HTML
@@ -204,9 +204,9 @@
 - Slack/Email notifications
 
 **Deployment to GitHub**
-- Push to GitHub repository (homeraltors)
+- Push to GitHub repository (propertyscouts)
 - Enable GitHub Pages
-- Configure custom domain (homeraltors.com)
+- Configure custom domain (propertyscouts.in)
 - SSL certificate (GitHub Pages provides auto HTTPS)
 
 ### Batch 5: SEO & Analytics
@@ -286,7 +286,7 @@
 ## 💻 PROJECT STRUCTURE
 
 ```
-/c/Users/Skydaddy/Desktop/homeraltors/
+/c/Users/Skydaddy/Desktop/propertyscouts/
 ├── config.toml                          # Hugo configuration
 ├── IMPLEMENTATION_SUMMARY.md            # This file
 ├── .gitignore                           # Git ignore rules
@@ -346,7 +346,7 @@
 | Component | Cost |
 |---|---|
 | Hosting (GitHub Pages) | **Free** ✅ |
-| Domain (homeraltors.com) | ~₹500/year |
+| Domain (propertyscouts.in) | ~₹500/year |
 | Gemini API | ~₹1000/month (free tier: 60 requests/day) |
 | n8n (self-hosted) | **Free** ✅ |
 | Google Sheets API | **Free** ✅ |
@@ -425,5 +425,5 @@
 - ✅ All 21 Landing Pages (3 properties × 7 pages each)
 - ✅ Git Repository (clean history, ready to push)
 - ⏳ GitHub Deployment (next step)
-- ⏳ Domain Setup (homeraltors.com)
+- ⏳ Domain Setup (propertyscouts.in)
 - ⏳ n8n Automation (price sync + lead nurture)

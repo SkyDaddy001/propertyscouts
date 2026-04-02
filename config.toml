@@ -1,6 +1,6 @@
-baseURL = "https://homeraltors.com/"
+baseURL = "https://propertyscouts.in/"
 languageCode = "en-us"
-title = "Home Realtors - Premium Real Estate in Chennai"
+title = "Property Scouts - Premium Real Estate in Chennai"
 theme = "custom"
 defaultContentLanguage = "en"
 enableRobotsTXT = true
@@ -9,7 +9,7 @@ pygmentsUseClasses = true
 
 [params]
   description = "Premium residential properties in Chennai - Investors, Families, Luxury Buyers, NRI Investors"
-  author = "Home Realtors"
+  author = "Property Scouts"
   logo = "/images/logo.png"
   googleAnalyticsID = ""
   apiKeys = { gemini = "${GEMINI_API_KEY}" }
