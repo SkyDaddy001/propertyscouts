@@ -1,16 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-gemini-key="{{ .Site.Params.geminiapikey }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ .Title }} | {{ .Site.Title }}</title>
-    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
-    <meta property="og:title" content="{{ .Title | default .Site.Title }}">
-    <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+    <title>{{ with .Title }}{{ . }} | {{ end }}{{ .Site.Title }}</title>
+    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Params.description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}{{ end }}">
+    <meta property="og:title" content="{{ with .Title }}{{ . }}{{ else }}{{ .Site.Title }}{{ end }}">
+    <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Params.description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}{{ end }}">
     <meta property="og:type" content="website">
-    <link rel="canonical" href="{{ .Permalink }}">
+    <link rel="canonical" href="{{ with .Params.canonical }}{{ . }}{{ else }}{{ .Permalink }}{{ end }}">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/css/chat-widget.css">
+    <script>
+      window.SITE_CONFIG = {
+        geminiApiKey: "{{ .Site.Params.geminiapikey }}",
+        formWebhookUrl: "{{ .Site.Params.formwebhookurl }}",
+        gaTrackingId: "{{ .Site.Params.googleanalyticsid }}",
+        phoneNumber: "{{ .Site.Params.phonenumber }}",
+        whatsappNumber: "{{ .Site.Params.whatsappnumber }}"
+      };
+    </script>
 </head>
 <body>
     {{ block "main" . }}{{ end }}

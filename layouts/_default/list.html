@@ -20,14 +20,15 @@
                 {{ partial "nurture-form.html" . }}
             {{ end }}
 
-            <section class="next-steps">
-                <h3>Ready to Take the Next Step?</h3>
-                <div class="action-buttons">
-                    <a href="tel:+91{{ .Site.Params.phonenumber }}" class="btn btn-primary">Call Us</a>
-                    <button class="btn btn-secondary" id="chat-trigger-page">Chat with AI</button>
-                    <a href="#schedule" class="btn btn-outline">Schedule Visit</a>
-                </div>
+            {{ if .Pages }}
+            <section class="sub-pages">
+                <ul>
+                    {{ range .Pages }}
+                    <li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+                    {{ end }}
+                </ul>
             </section>
+            {{ end }}
         </article>
     </main>
 

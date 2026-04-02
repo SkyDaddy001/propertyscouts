@@ -1,19 +1,4 @@
 {{ define "main" }}
-<!DOCTYPE html>
-<html lang="en" data-gemini-key="{{ .Site.Params.apiKeys.gemini }}">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ .Site.Title }} - Premium Real Estate in Chennai</title>
-    <meta name="description" content="{{ .Site.Params.description }}">
-    <meta property="og:title" content="{{ .Site.Title }}">
-    <meta property="og:description" content="{{ .Site.Params.description }}">
-    <meta property="og:type" content="website">
-    <link rel="canonical" href="{{ .Permalink }}">
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/chat-widget.css">
-</head>
-<body>
     {{ partial "header.html" . }}
 
     <main class="container">
@@ -80,7 +65,7 @@
         </section>
 
         <section class="why-us">
-            <h2>Why Choose Home Realtors?</h2>
+            <h2>Why Choose Property Scouts?</h2>
             <div class="features">
                 <div class="feature">
                     <span class="icon">✅</span>
@@ -107,9 +92,4 @@
     </main>
 
     {{ partial "footer.html" . }}
-
-    <script src="/js/gemini-chat.js"></script>
-    <script src="/js/app.js"></script>
-</body>
-</html>
 {{ end }}

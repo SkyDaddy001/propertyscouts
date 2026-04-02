@@ -2,7 +2,7 @@
     <div class="container">
         <div class="footer-content">
             <div class="footer-section">
-                <h4>Property Scouts</h4>
+                <h4>{{ .Site.Params.brandName | default "Property Scouts" }}</h4>
                 <p>Premium real estate solutions in Chennai for investors, families, and luxury buyers.</p>
             </div>
             <div class="footer-section">
@@ -16,14 +16,14 @@
             </div>
             <div class="footer-section">
                 <h4>Contact</h4>
-                <p>📞 +91-8668126015</p>
-                <p>📧 info@propertyscouts.in</p>
+                <p>📞 <a href="tel:+91{{ .Site.Params.phonenumber }}">+91-{{ .Site.Params.phonenumber }}</a></p>
+                <p>📧 <a href="mailto:info@propertyscouts.in">info@propertyscouts.in</a></p>
                 <p>📍 Chennai, India</p>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 Property Scouts. All rights reserved.</p>
-            <p><a href="/privacy/">Privacy Policy</a> | <a href="/terms/">Terms & Conditions</a> | <a href="/disclaimer/">Disclaimer</a></p>
+            <p>&copy; {{ now.Format "2006" }} {{ .Site.Params.brandName | default "Property Scouts" }}. All rights reserved.</p>
+            <p><a href="/privacy/">Privacy Policy</a> | <a href="/terms/">Terms &amp; Conditions</a> | <a href="/disclaimer/">Disclaimer</a></p>
         </div>
     </div>
 </footer>

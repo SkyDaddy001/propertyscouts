@@ -1,15 +1,20 @@
 <header class="navbar">
     <div class="container navbar-content">
         <div class="logo">
-            <a href="/">🏠 Home Realtors</a>
+            <a href="/">🏠 {{ .Site.Params.brandName | default "Property Scouts" }}</a>
         </div>
-        <nav class="nav-menu">
+        <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        <nav class="nav-menu" id="nav-menu">
             <ul>
                 <li><a href="/">Home</a></li>
                 <li><a href="/skylivng/">SkyLiving</a></li>
                 <li><a href="/leagueone/">League One</a></li>
                 <li><a href="/luxeone/">Luxe One</a></li>
-                <li><a href="tel:+918668126015" class="cta-link">📞 Contact</a></li>
+                <li><a href="tel:+91{{ .Site.Params.phonenumber }}" class="cta-link">📞 Contact</a></li>
             </ul>
         </nav>
     </div>
