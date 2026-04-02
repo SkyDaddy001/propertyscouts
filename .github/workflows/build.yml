@@ -30,12 +30,24 @@ jobs:
           hugo-version: '0.128.0'
           extended: true
 
+      - name: Debug - Print Env Vars
+        env:
+          HUGO_PARAMS_GEMINIAPIKEY: ${{ secrets.GEMINI_API_KEY }}
+          HUGO_PARAMS_FORMWEBHOOKURL: ${{ secrets.FORM_WEBHOOK_URL }}
+          HUGO_PARAMS_GOOGLEANALYTICSID: ${{ secrets.GA_TRACKING_ID }}
+        run: |
+          echo "FORM_WEBHOOK_URL secret value length: ${#HUGO_PARAMS_FORMWEBHOOKURL}"
+          echo "FORM_WEBHOOK_URL secret value: $HUGO_PARAMS_FORMWEBHOOKURL"
+
       - name: Build
         env:
           HUGO_PARAMS_GEMINIAPIKEY: ${{ secrets.GEMINI_API_KEY }}
           HUGO_PARAMS_FORMWEBHOOKURL: ${{ secrets.FORM_WEBHOOK_URL }}
           HUGO_PARAMS_GOOGLEANALYTICSID: ${{ secrets.GA_TRACKING_ID }}
-        run: hugo --minify
+        run: |
+          hugo --minify
+          echo "Checking built HTML for webhook URL..."
+          grep -o 'formWebhookUrl: "[^"]*"' public/index.html | head -1
 
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/master'
