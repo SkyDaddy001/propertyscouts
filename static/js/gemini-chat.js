@@ -22,7 +22,7 @@ class GeminiChatWidget {
       <div id="gemini-chat-widget" class="chat-widget">
         <div class="chat-header">
           <div class="chat-title">
-            <h3>HomeRealtors AI Assistant</h3>
+            <h3>Property Scouts AI Assistant</h3>
             <p>Find your perfect property</p>
           </div>
           <button id="chat-close-btn" class="chat-close" aria-label="Close chat">×</button>
@@ -97,7 +97,7 @@ class GeminiChatWidget {
       // Detect lead intent
       this.detectLeadIntent(message, response);
     } catch (error) {
-      this.addMessage('assistant', 'Sorry, I encountered an error. Please try again or contact us directly at +91-XXXXX');
+      this.addMessage('assistant', 'Sorry, I encountered an error. Please call us or use WhatsApp to reach our team.');
       console.error('Gemini API error:', error);
     } finally {
       this.sendBtn.disabled = false;
@@ -189,12 +189,24 @@ Always offer to schedule a site visit or consultation call.`;
     const name = document.getElementById('lead-name')?.value;
     const phone = document.getElementById('lead-phone')?.value;
 
-    if (name && phone) {
-      this.leadData = { name, phone, timestamp: new Date().toISOString() };
-      // Send to backend/Airtable
-      console.log('Lead captured:', this.leadData);
-      this.addMessage('assistant', 'Great! We\'ll contact you soon to schedule your visit. 🏠');
+    if (!name || !phone) return;
+
+    this.leadData = { name, phone, timestamp: new Date().toISOString(), source: window.location.href };
+
+    const webhookUrl = window.SITE_CONFIG && window.SITE_CONFIG.formWebhookUrl;
+    if (webhookUrl) {
+      fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'chat-lead', ...this.leadData })
+      }).catch(err => console.error('Lead POST failed:', err));
     }
+
+    this.leadData.captured = true;
+    this.addMessage('assistant', 'Great! We\'ll contact you soon to schedule your visit. 🏠');
+
+    const popup = this.chatMessages.querySelector('.lead-form-popup');
+    if (popup) popup.remove();
   }
 
   escapeHtml(text) {

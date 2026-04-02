@@ -1,20 +1,21 @@
 /**
- * Home Realtors App - Main JavaScript
+ * Property Scouts App - Main JavaScript
  */
 
 document.addEventListener('DOMContentLoaded', function() {
   initFormHandling();
   initChatTriggers();
   initScrollBehaviors();
+  initHamburgerMenu();
+  trackPageView();
 });
 
 /**
  * Form Handling
  */
 function initFormHandling() {
-  const forms = document.querySelectorAll('.nurture-form');
-
-  forms.forEach(form => {
+  var forms = document.querySelectorAll('.nurture-form');
+  forms.forEach(function(form) {
     form.addEventListener('submit', handleFormSubmit);
   });
 }
@@ -22,99 +23,87 @@ function initFormHandling() {
 async function handleFormSubmit(e) {
   e.preventDefault();
 
-  const form = e.target;
-  const formData = new FormData(form);
-  const data = Object.fromEntries(formData);
+  var form = e.target;
+  var formData = new FormData(form);
+  var data = Object.fromEntries(formData);
 
-  // Add metadata
+  data.whatsapp = form.querySelector('[name="whatsapp"]') && form.querySelector('[name="whatsapp"]').checked ? 'on' : '';
+  data.newsletter = form.querySelector('[name="newsletter"]') && form.querySelector('[name="newsletter"]').checked ? 'on' : '';
   data.timestamp = new Date().toISOString();
-  data.userAgent = navigator.userAgent;
   data.source = window.location.href;
+  data.property = data.property || form.dataset.property || '';
+  data.persona = data.persona || form.dataset.persona || '';
+
+  var webhookUrl = window.SITE_CONFIG && window.SITE_CONFIG.formWebhookUrl;
 
   try {
-    // Send to backend (replace with your API endpoint)
-    console.log('Lead captured:', data);
+    if (webhookUrl) {
+      var response = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (!response.ok) throw new Error('Webhook ' + response.status);
+    }
 
-    // Show success message
     showSuccessMessage(form, data);
 
-    // Send WhatsApp message if enabled
-    if (data.whatsapp) {
+    if (data.whatsapp && data.phone) {
       sendWhatsAppMessage(data);
     }
   } catch (error) {
     console.error('Form submission error:', error);
-    showErrorMessage(form, 'Error submitting form. Please try again.');
+    if (!webhookUrl) {
+      showSuccessMessage(form, data);
+      sendWhatsAppMessage(data);
+    } else {
+      showErrorMessage(form, 'Submission failed. Please call us or use WhatsApp.');
+    }
   }
 }
 
 function showSuccessMessage(form, data) {
-  const successDiv = document.createElement('div');
+  var successDiv = document.createElement('div');
   successDiv.className = 'success-message';
-  successDiv.innerHTML = `
-    <h3>✅ Thank You!</h3>
-    <p>We've received your information. Our team will contact you within 24 hours.</p>
-    <p style="font-size: 0.9rem; color: #666; margin-top: 1rem;">
-      Expecting a message on <strong>${data.phone}</strong>
-    </p>
-  `;
+  successDiv.innerHTML =
+    '<h3>\u2705 Thank You!</h3>' +
+    '<p>We\u2019ve received your information. Our team will contact you within 24 hours.</p>' +
+    '<p style="font-size:0.9rem;color:#666;margin-top:1rem;">' +
+    'Expecting a call on <strong>' + (data.phone || '') + '</strong></p>';
 
   form.parentElement.insertBefore(successDiv, form);
   form.style.display = 'none';
-
-  // Add success styling
-  const style = document.createElement('style');
-  style.textContent = `
-    .success-message {
-      background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
-      border: 2px solid #27ae60;
-      padding: 2rem;
-      border-radius: 8px;
-      text-align: center;
-      animation: slideIn 0.3s ease;
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  `;
-  document.head.appendChild(style);
 }
 
 function showErrorMessage(form, message) {
-  const errorDiv = document.createElement('div');
+  var errorDiv = document.createElement('div');
   errorDiv.className = 'error-message';
-  errorDiv.innerHTML = `<p>❌ ${message}</p>`;
+  errorDiv.innerHTML = '<p>\u274C ' + message + '</p>';
   form.insertBefore(errorDiv, form.firstChild);
-
-  // Remove error after 5 seconds
-  setTimeout(() => errorDiv.remove(), 5000);
+  setTimeout(function() { errorDiv.remove(); }, 5000);
 }
 
 function sendWhatsAppMessage(data) {
-  const message = encodeURIComponent(
-    `Hi ${data.name}, thanks for your interest in ${data.property}. ` +
-    `Our team will contact you shortly with details. - Home Realtors`
+  var businessNumber = window.SITE_CONFIG && window.SITE_CONFIG.whatsappNumber
+    ? window.SITE_CONFIG.whatsappNumber
+    : '91XXXXXXXXXX';
+
+  var propertyName = data.property || 'a property';
+  var message = encodeURIComponent(
+    'Hi, I am ' + (data.name || 'a visitor') + ' and I am interested in ' +
+    propertyName + '. Please contact me on ' + (data.phone || '') + '.'
   );
-  const whatsappURL = `https://wa.me/91${data.phone.replace(/\D/g, '').slice(-10)}?text=${message}`;
-  console.log('WhatsApp URL:', whatsappURL);
+  var whatsappURL = 'https://wa.me/' + businessNumber + '?text=' + message;
+  window.open(whatsappURL, '_blank', 'noopener,noreferrer');
 }
 
 /**
  * Chat Widget Triggers
  */
 function initChatTriggers() {
-  const chatTriggers = document.querySelectorAll('[id^="chat-trigger"]');
-
-  chatTriggers.forEach(trigger => {
-    trigger.addEventListener('click', (e) => {
+  var chatTriggers = document.querySelectorAll('[id^="chat-trigger"]');
+  chatTriggers.forEach(function(trigger) {
+    trigger.addEventListener('click', function(e) {
       e.preventDefault();
       if (window.chatWidget) {
         window.chatWidget.toggleChat();
@@ -124,47 +113,71 @@ function initChatTriggers() {
 }
 
 /**
+ * Hamburger Menu
+ */
+function initHamburgerMenu() {
+  var hamburger = document.querySelector('.hamburger');
+  var navMenu = document.querySelector('.nav-menu');
+  if (!hamburger || !navMenu) return;
+
+  hamburger.addEventListener('click', function() {
+    var isOpen = navMenu.classList.toggle('nav-open');
+    hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    hamburger.classList.toggle('hamburger-active', isOpen);
+  });
+
+  navMenu.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      navMenu.classList.remove('nav-open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.classList.remove('hamburger-active');
+    });
+  });
+}
+
+/**
  * Scroll Behaviors
  */
 function initScrollBehaviors() {
-  // Smooth scroll for anchor links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
     anchor.addEventListener('click', function(e) {
-      const href = this.getAttribute('href');
+      var href = this.getAttribute('href');
       if (href !== '#' && document.querySelector(href)) {
         e.preventDefault();
         document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
       }
     });
   });
-
-  // Scroll to top on page load
   window.scrollTo(0, 0);
 }
 
-/**
- * Utility Functions
- */
 window.scrollToSection = function(sectionId) {
-  const element = document.getElementById(sectionId);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
+  var el = document.getElementById(sectionId);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
 };
 
 window.openChat = function() {
-  if (window.chatWidget) {
-    window.chatWidget.toggleChat();
-  }
+  if (window.chatWidget) window.chatWidget.toggleChat();
 };
 
-// Track page analytics (placeholder)
+/**
+ * GA4 Analytics
+ */
 function trackPageView() {
-  console.log('Page View:', {
-    url: window.location.href,
-    title: document.title,
-    timestamp: new Date().toISOString()
-  });
-}
+  var gaId = window.SITE_CONFIG && window.SITE_CONFIG.gaTrackingId;
+  if (!gaId) return;
 
-trackPageView();
+  if (!document.getElementById('gtag-script')) {
+    var s = document.createElement('script');
+    s.id = 'gtag-script';
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
+    document.head.appendChild(s);
+  }
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  window.gtag = gtag;
+  gtag('js', new Date());
+  gtag('config', gaId, { page_path: window.location.pathname });
+}
