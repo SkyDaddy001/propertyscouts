@@ -38,6 +38,7 @@ jobs:
           folder: public
           branch: gh-pages
           cname: propertyscouts.in
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Notify completion
         run: |
