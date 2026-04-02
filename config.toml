@@ -1,7 +1,6 @@
 baseURL = "https://propertyscouts.in/"
 languageCode = "en-us"
 title = "Property Scouts - Premium Real Estate in Chennai"
-theme = "custom"
 defaultContentLanguage = "en"
 enableRobotsTXT = true
 canonifyURLs = true
