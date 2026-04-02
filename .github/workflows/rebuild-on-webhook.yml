@@ -35,13 +35,17 @@ jobs:
 
       - name: Deploy to GitHub Pages
         run: |
-          cd public
-          git init
           git config user.email "github-actions@github.com"
           git config user.name "GitHub Actions"
+          git fetch origin gh-pages --depth=1 || echo "gh-pages branch does not exist yet"
+          git symbolic-ref refs/remotes/origin/HEAD origin/master
+          git checkout --orphan gh-pages
+          git rm -rf .
+          cp -r public/* .
+          cp public/.nojekyll . 2>/dev/null || true
           git add .
-          git commit -m "Deploy from webhook: price update"
-          git push -f https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:gh-pages
+          git commit -m "Deploy from webhook: price update" || echo "No changes to commit"
+          git push -f origin gh-pages
 
       - name: Notify completion
         run: |
