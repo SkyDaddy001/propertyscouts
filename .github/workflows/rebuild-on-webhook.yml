@@ -12,6 +12,9 @@ jobs:
       pages: write
       id-token: write
 
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -37,7 +40,6 @@ jobs:
         with:
           folder: public
           branch: gh-pages
-          cname: propertyscouts.in
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Notify completion
