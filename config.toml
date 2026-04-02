@@ -9,9 +9,13 @@ pygmentsUseClasses = true
 [params]
   description = "Premium residential properties in Chennai - Investors, Families, Luxury Buyers, NRI Investors"
   author = "Property Scouts"
-  logo = "/images/logo.png"
+  brandName = "Property Scouts"
+  logo = "/images/logo.svg"
+  geminiApiKey = ""
+  formWebhookUrl = ""
+  phoneNumber = "8668126015"
+  whatsappNumber = "918668126015"
   googleAnalyticsID = ""
-  apiKeys = { gemini = "${GEMINI_API_KEY}" }
 
 [outputs]
   home = ["HTML", "JSON"]
